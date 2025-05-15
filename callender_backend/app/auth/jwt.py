@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from jose import JWTError, jwt
 
 SECRET_KEY = "your-secret-key"
@@ -8,7 +8,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 def create_access_token(data: dict, expire_delta: timedelta = None):
     to_encode = data.copy()
-    expire = datetime.timezone.utc() + (
+    expire = datetime.now(timezone.utc) + (
         expire_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     )
     to_encode.update({"exp": expire})
